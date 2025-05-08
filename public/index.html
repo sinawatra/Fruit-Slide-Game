@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Duper Fruit Slice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="debugInfo" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 1000; max-width: 300px; max-height: 200px; overflow: auto; display: none;">
+  Debug Info
+</div>
+    <div class="game-container">
+        <div class="hud">
+            <div class="score">Score: <span id="score" class="score-value">0</span></div>
+            <div class="combo">
+                Combo: <span id="combo" class="combo-value">x1</span>
+                <div class="combo-meter"><div id="comboFill" class="combo-fill"></div></div>
+            </div>
+            <div class="lives">
+                Lives: 
+                <div class="lives-container" id="livesContainer">
+                    <div class="life"></div>
+                    <div class="life"></div>
+                    <div class="life"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="powerup-container">
+            <div class="powerup" id="freezePowerup" title="Freeze Time">❄️</div>
+            <div class="powerup" id="doublePowerup" title="Double Points">2️⃣</div>
+            <div class="powerup" id="magnetPowerup" title="Fruit Magnet">🧲</div>
+        </div>
+        
+        <div id="notification" class="notification"></div>
+        
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="startScreen" class="screen">
+            <h1>Super Duper Fruit Slice</h1>
+            <p>Swipe to slice fruits, avoid bombs, and collect power-ups!</p>
+            <div class="achievements">
+                <div class="achievement" data-id="slice10">
+                    🍎
+                    <div class="achievement-tooltip">Slice 10 fruits</div>
+                </div>
+                <div class="achievement" data-id="combo5">
+                    🔥
+                    <div class="achievement-tooltip">5x Combo</div>
+                </div>
+                <div class="achievement" data-id="score100">
+                    💯
+                    <div class="achievement-tooltip">Score 100 points</div>
+                </div>
+                <div class="achievement" data-id="critical">
+                    ⚡
+                    <div class="achievement-tooltip">Critical slice</div>
+                </div>
+            </div>
+            <button id="viewHighScoresButton" class="secondary-button">High Scores</button>
+            <button id="startButton">Start Game</button>
+        </div>
+        
+        <div id="gameOverScreen" class="screen hidden">
+            <h2>Game Over!</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <div class="progress-container">
+                <div id="levelProgress" class="progress-bar"></div>
+            </div>
+            <p>Level: <span id="playerLevel">1</span></p>
+            
+            <div id="newHighScoreForm" class="hidden">
+                <h3>New High Score!</h3>
+                <div class="input-container">
+                    <input type="text" id="playerNameInput" placeholder="Enter your name" maxlength="15">
+                    <button id="saveScoreButton">Save</button>
+                </div>
+            </div>
+            
+            <div class="leaderboard">
+                <h3>High Scores</h3>
+                <div id="highScoresList" class="high-scores-list"></div>
+            </div>
+            
+            <div class="achievements" id="achievementsDisplay"></div>
+            <button id="restartButton">Play Again</button>
+        </div>
+    </div>
+
+    <div id="highScoresScreen" class="screen hidden">
+        <h2>High Scores</h2>
+        <div id="highScoresListFull" class="high-scores-list"></div>
+        <button id="backButton">Back</button>
+    </div>
+    <script src="game.js"></script>
+    <script>
+  // Enable this for debugging
+  const DEBUG_MODE = true;
+  
+  if (DEBUG_MODE) {
+    const debugElement = document.getElementById('debugInfo');
+    debugElement.style.display = 'block';
+    
+    // Override console.log to also display in our debug element
+    const originalLog = console.log;
+    console.log = function(message) {
+      originalLog.apply(console, arguments);
+      
+      if (message && message.toString().includes('[Game Debug]')) {
+        const debugElement = document.getElementById('debugInfo');
+        const newLine = document.createElement('div');
+        newLine.textContent = message;
+        debugElement.appendChild(newLine);
+        
+        // Keep only the last 10 messages
+        while (debugElement.children.length > 10) {
+          debugElement.removeChild(debugElement.firstChild);
+        }
+      }
+    };
+  }
+</script>
+</body>
+</html>

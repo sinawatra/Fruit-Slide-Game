@@ -22,6 +22,15 @@ body {
   overflow: hidden;
   color: white;
 }
+/* Add to styles.css */
+#gameCanvas {
+  width: 100vw;
+  height: 60vh;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  touch-action: none; /* Prevents scrolling while swiping */
+}
 
 .game-container {
   position: relative;
